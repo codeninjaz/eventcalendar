@@ -1,0 +1,459 @@
+$cellSize             : 60px;
+$borderColor          : #CCC;
+$hasInternalEventColor: #ef8409;
+$hasExternalEventColor: #fdB813;
+$todayColor           : #575756;
+$selectedColor        : #ffd464;
+$markedColor          : #79DEFF;
+$infoBackground       : #eee;
+$lightBackground      : #EEE;
+$editorBackground     : #E6E6E6;
+$standardSpace        : 8px;
+$fixedWidth           : 680px;
+$standardBorder       : solid 1px $borderColor;
+$selectedBackground   : #AAA;
+$eventIndicatorColor  : #76A800;
+
+body {
+    background-color: #FFF;
+    font-family     : "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
+.clear {
+    clear: both;
+}
+.calendar {
+    width: $fixedWidth;
+}
+.toolbox {
+    width: $cellSize*7;
+    height: 30px;
+    position: relative;
+    .controls {
+        .arrow-left{
+            cursor: pointer;
+            position: absolute;
+            left:0px;
+            top:6px;
+        }
+        .arrow-right{
+            cursor: pointer;
+            position: absolute;
+            right:0px;
+            top:6px;
+        }
+        .month-title {
+            left: $cellSize*7 / 2;
+            font: {
+                size  : 21px;
+                weight: 500;
+            }
+            text: {
+                transform: uppercase;
+                align    : center;
+            }
+        }
+        .edit-button{
+            cursor: pointer;
+            position: absolute;
+            top: 6px;
+            right: 40px;
+        }
+    }
+}
+.month-cat {
+    height: $cellSize*7 + $standardSpace;
+    position: relative;
+    .month-box{
+        display: inline;
+        width  : $cellSize*7 + 2px;
+        min-height: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        .month {
+            display        : table;
+            border         : solid 1px $borderColor;
+            border-collapse: collapse;
+        }
+    }
+    .category-list {
+        position: absolute;
+        top: 0;
+        left: $cellSize*7 + 40px;
+        display: inline;
+        -webkit-user-select: none;
+        -ms-user-select    : none;
+        -moz-user-select   : none;
+        width              : $fixedWidth - $cellSize*7 - $standardSpace*4;
+        height             : $cellSize*5 - $standardSpace*2;
+        min-height: 100px;
+        background-color   : white;
+        font-weight        : 500;
+        .category-heading{
+            font-size: 21px;
+        }
+        ul {
+            -webkit-user-select: none;
+            -ms-user-select    : none;
+            -moz-user-select   : none;
+            list-style         : none;
+            margin             : 0;
+            padding            : 12px 0 0 0;
+            li {
+                -webkit-user-select: none;
+                -ms-user-select    : none;
+                -moz-user-select   : none;
+                text-transform     : capitalize;
+                cursor             : pointer;
+                position           : relative;
+                img{
+                    position:relative;
+                    top:2px;
+                }
+            }
+        }
+    }
+}
+.weekrow {
+    display: table-row;
+}
+.daybox {
+    z-index              : 100;
+    display              : table-cell;
+    float                : left;
+    width                : $cellSize;
+    height               : $cellSize;
+    box-sizing           : border-box;
+    font-size            : 15px;
+    text-align           : center;
+    cursor               : pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select  : none;
+    -khtml-user-select   : none;
+    -moz-user-select     : none;
+    -ms-user-select      : none;
+    user-select          : none;
+    transition           : all 50;
+    border-right         : solid 1px $borderColor;
+    border-bottom        : solid 1px $borderColor;
+    position             : relative;
+    transition           : background-color 0.2s ease-in-out;
+    &:last-child {
+        border       : none;
+        border-bottom: solid 1px $borderColor;
+    }
+    &:hover {
+        opacity: 0.7;
+    }
+    &.today {
+        background-color: $todayColor;
+        color           : white;
+        .date-number {
+            color: white;
+        }
+    }
+    &.selected {
+        background-color: $selectedColor;
+        color: black;
+        .date-number {
+            color: black;
+        }
+    }
+    &.startday {
+        background-color: #FC79FF
+    }
+    &.stopday {
+        background-color: #9D5FE9
+    }
+    &.marked {
+        background-color: $markedColor;
+        color: black;
+        .date-number {
+            color: black;
+        }
+    }
+    &.disable {
+        color: #aaa;
+        background-color: #eee;
+        cursor: default;
+        &:hover{
+            opacity: 1;
+        }
+    }
+    &.has-event-internal {
+        background-color: $hasInternalEventColor;
+    }
+    &.has-event-external {
+        background-color: $hasExternalEventColor;
+    }
+    .date-number {
+        margin     : 17px auto;
+        font-size  : 17px;
+        width      : 100%;
+    }
+    .day-name {
+        text-transform: uppercase;
+        font-size     : 11px;
+    }
+    .month-name {} .sunday {
+        color: red;
+    }
+    .day-indicator {
+        position: absolute;
+        right   : 2px;
+        bottom  : 0;
+        .day-inidicator-box {
+            display: inline;
+        }
+    }
+    .week-number {
+        position : absolute;
+        bottom   : 2px;
+        left     : 2px;
+        font-size: 10px;
+    }
+}
+.infobox {
+    background-color: $infoBackground;
+    width           : 100%;
+    border          : $standardBorder;
+    margin-top      : $standardSpace;
+    position        : relative;
+    transition      : all 0.2s ease-in-out;
+    h1 {
+        font-size: 20px;
+        display  : inline;
+    }
+    .info-dates {
+        font-weight: bold;
+    }
+    .info-inner {
+        padding         : 8px;
+        background-color: white;
+        .comment {
+            margin-top: 8px;
+            width: 100%;
+        }
+        img {
+            float      : right;
+            width      : 30%;
+            margin-left: $standardSpace;
+        }
+    }
+    .info-category {
+        text-transform: capitalize;
+    }
+    .close-button-top{
+        height:40px;
+    }
+    .close-button{
+        position: absolute;
+        top     : 10px;
+        right   : 10px;
+        cursor  : pointer;
+    }
+    &.slide-up {
+        max-height: 0;
+        margin-top: 0;
+        opacity   : 0;
+        visibility: hidden;
+    }
+    &.slide-down {
+        max-height: 2000px;
+        margin-top: $standardSpace;
+        opacity   : 1;
+        visibility: visible;
+    }
+}
+.infobox-enter{
+    opacity   : 0.01;
+    transition: opacity .5s ease-in;
+}
+.infobox-enter .infobox-enter-active{
+    opacity: 1;
+}
+.eventeditor {
+    width           : $fixedWidth - $standardSpace*2 - 2px;
+    margin-top      : $standardSpace;
+    border          : $standardBorder;
+    overflow        : auto;
+    padding         : $standardSpace;
+    background-color: $editorBackground;
+    textarea {
+        width : $fixedWidth - $standardSpace*3;
+        height: 150px;
+    }
+    .editor-preview {
+        .infobox {
+            width: $fixedWidth - $standardSpace*3 + 4px;
+        }
+    }
+    .editor-categories {
+        text-transform: capitalize;
+    }
+    transition: all 0.5s ease-out;
+    &.slide-up {
+        max-height: 0;
+        margin-top: 0;
+        opacity   : 0;
+        visibility: hidden;
+    }
+    &.slide-down {
+        max-height: 2000px;
+        margin-top: $standardSpace;
+        opacity   : 1;
+        visibility: visible;
+    }
+}
+.popup {
+    z-index         : 10000;
+    background-color: $lightBackground;
+    width           : 200px;
+    height          : 50px;
+    padding         : $standardSpace;
+    border-radius   : 10px;
+    border          : $standardBorder;
+    ul {
+        list-style: none;
+        margin    : 0;
+        padding   : 0;
+    }
+}
+.event-list {
+    width: $fixedWidth;
+    a {
+        color          : black;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    h2 {
+        margin: 0;
+        font-size: 21px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    ul {
+        width     : 100%;
+        padding   : 0;
+        margin    : 0;
+        list-style: none;
+        border    : $standardBorder;
+    }
+    li {
+        background-color: #EEE;
+        padding         : $standardSpace;
+        border-bottom: $standardBorder;
+    }
+    .event-list-item {
+        transition: background-color 0.2s ease-in-out;
+        cursor    : pointer;
+        position  : relative;
+        &.selected {
+            background-color: $markedColor;
+        }
+        .event-list-arrow {
+            position  : absolute;
+            right     : 5px;
+            transition: transform 0.2s;
+        }
+        .item-heading{
+            font-weight:600;
+            font-size: 15px;
+        }
+        .item-date{
+            font-weight: normal;
+            font-size: 13px;
+            padding-left:10px;
+        }
+    }
+}
+.rotate-90 {
+    transform: rotate(90deg) !important;
+}
+.wait-image {
+    position: absolute;
+    top     : 100px;
+    left    : 100px;
+    z-index : 10000;
+}
+input {
+    &.highlight {
+        animation-duration: 0.5s;
+        animation-name    : flash;
+    }
+}
+.numberspinner-container {
+    border          : $standardBorder;
+    background-color: white;
+    width           : 65px;
+    height          : 40px;
+    position        : relative;
+    .numberspinner-number {
+        position        : absolute;
+        width           : 40px;
+        height          : 40px;
+        background-color: white;
+        color           : #333333;
+        font-size       : 25px;
+        text-align      : center;
+        vertical-align  : middle;
+        line-height     : 40px;
+        cursor          : default;
+    }
+    .numberspinner-arrow-container{
+        position: absolute;
+        left    : 40px;
+        img{
+            background-color: white;
+            border-left     : $standardBorder;
+            cursor          : pointer;
+        }
+        .numberspinner-arrow-up{
+            position        : absolute;
+        }
+        .numberspinner-arrow-down{
+            position        : absolute;
+            bottom          : -40px;
+        }
+    }
+}
+
+.year-spinner{
+    display: inline-block;
+    width: 85px;
+    .numberspinner-number{
+        width: 60px;
+    }
+    .numberspinner-arrow-container{
+        left:60px;
+    }
+}
+
+.hour-spinner{
+    display: inline-block;
+}
+
+.minute-spinner{
+    display: inline-block;
+}
+
+.kalender-editor{
+    height:200px;
+    background-color: white;
+    border: $standardBorder;
+}
+
+.editor-field, .editor-image{
+    label{
+        display: inline-block;
+        width: 100px;
+    }
+}
