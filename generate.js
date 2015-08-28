@@ -1,3 +1,4 @@
+//Generates dummy data for development
 import Moment           from 'moment';
 import FS               from 'fs';
 import Categories       from './src/dummydata/categoryData.json';
